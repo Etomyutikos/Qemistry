@@ -1,6 +1,6 @@
 Title: Usage Guide
 
-<queue> = QeM.Queue:new( <balance as a string, table of strings, a function, a table of functions, or boolean value>, [<option as a single string, or a table of options>] )
+<queue> = Qemistry.Queue( <balance as a string, table of strings, a function, a table of functions, or boolean value>, [<option as a single string, or a table of options>] )
 
 	This will instantiate a new Queue.
 	If passed a string value, that string must point to a boolean variable acting as "balance."
@@ -10,15 +10,15 @@ Title: Usage Guide
 	In Lua, any value that is not false or nil will evaluate to true. Keep this in mind when passing a
 	function; also, that function must return a value.
 		Example: = QeM.Queue:new( {"balance", "equilibrium"} ) or
-					= QeM.Queue:new( {"my_system.balance", "my_system.equilibrium"} )
-					= QeM.Queue:new( function () return my_system.balance end )
-					= QeM.Queue:new( {"my_system.balance", function () return my_system.equilibrium end} )
-					= QeM.Queue:new( somePredefinedFunction() )
+					= Qemistry.Queue( {"my_system.balance", "my_system.equilibrium"} )
+					= Qemistry.Queue( function () return my_system.balance end )
+					= Qemistry.Queue( {"my_system.balance", function () return my_system.equilibrium end} )
+					= Qemistry.Queue( somePredefinedFunction() )
 	If passed a boolean, it must be true, or the Queue won't work.
-		Example: = QeM.Queue:new( true )
+		Example: 		= Qemistry.Queue( true )
 	Options are passed the following ways, and are optional:
-		Example: = QeM.Queue:new( "balance", "strict_order" )
-					= QeM.Queue:new( "balance", {"strict_order", "single_step"} )
+		Example: 		= Qemistry.Queue( "balance", "strict_order" )
+					= Qemistry.Queue( "balance", {"strict_order", "single_step"} )
 
 	Currently supported options are:
 		strict_order: Maintains the order of actions in the Queue, regardless of consumed or required
@@ -27,41 +27,49 @@ Title: Usage Guide
 		single_step: The Queue does not re-execute itself, except in the case of a consumed balance going
 			unconsumed.
 
+Qemistry.Do( queue as a string )
 
-<queue>:add( <action as a table containing a code field, and a required and/or consumed field> )
-<queue>:add( <action as a string or function> )
+	This will call Do() on all of the queues created via Qemistry if called without an argument.
+	If called with an argument, if will call Do() on that queue.
+
+Qemistry.Delete( queue as a string )
+
+	Will delete the queue passed from Qemistry.
+
+<queue>:Add( <action as a table containing a code field, and a required and/or consumed field> )
+<queue>:Add( <action as a string or function> )
 
 	If passed a string or function, then QeMistry assumes the action requires, but does not consume
 	the same balance as the Queue itself. This string or function must contain the action to be taken.
 	If the value is a string, that value will be sent to the MuD as a command using the Mudlet function
 	send(). If the value is a function, it will be executed when the Queue calls for it.
-		Example: add( function () echo( "Do stuff!" ) end ) or
-					add( "Do stuff!" )
+		Example: 		Add( function () echo( "Do stuff!" ) end ) or
+					Add( "Do stuff!" )
 	If passed a table, then the table may contain a code field. This code field, or the table itself, must
 	contain a list of strings or functions to be executed.
-		Example: add( {code = {"Do stuff!", "Do more stuff!"}} ) or
-					add( {function () echo( "Do stuff!" ) end, function () echo( "Do more stuff!" ) end} ) or
-					add( {"Do stuff!", function () echo( "Do more stuff!") end} )
+		Example: 		Add( {code = {"Do stuff!", "Do more stuff!"}} ) or
+					Add( {function () echo( "Do stuff!" ) end, function () echo( "Do more stuff!" ) end} ) or
+					Add( {"Do stuff!", function () echo( "Do more stuff!") end} )
 	Optionally, the table can contain either/both a required field and/or a consumed field. If the table
 	contains a required or consumed field, the code must be enclosed in a code field. These fields must be a
 	string pointing to a boolean variable acting as "balance," or a function that will return a boolean value. 
 	In the case of the required field, this can be a boolean value itself. If these fields are omitted,
 	then it is assumed this action requires the same balance as the Queue itself.
 		Example: add( {code = "code", required = "my_system.balance"} ) or
-					add( {code = "code", consumed = "my_system.balance"} ) or
-					add( {code = "code", required = "my_system.balance", consumed = "my_system.equilibrium"} )
-					add( {code = "code", required = "my_system.balance", consumed = function () return my_system.equilibrium end} )
+					Add( {code = "code", consumed = "my_system.balance"} ) or
+					Add( {code = "code", required = "my_system.balance", consumed = "my_system.equilibrium"} )
+					Add( {code = "code", required = "my_system.balance", consumed = function () return my_system.equilibrium end} )
 	You can pass both the consumed and required fiels as tables for multiple balances.
-		Example: add( {code = "code", required = {"my_system.balance", "my_system.equilibrium"} )
-					add( {code = "code", required = {function () return my_system.balance end, somePredefinedFunction()}} )
+		Example: 		Add( {code = "code", required = {"my_system.balance", "my_system.equilibrium"} )
+					Add( {code = "code", required = {function () return my_system.balance end, somePredefinedFunction()}} )
 
 
-<queue>:reset()
+<queue>:Reset()
 
 	This will empty the action list for the Queue.
 
 
-<queue>:act()
+<queue>:Do()
 
 	This is to be called whenever the Queue should process the next action in its list.
 	The Queue will first check to see if the balance variable it points to contains true.
