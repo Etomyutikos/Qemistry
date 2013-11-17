@@ -1,24 +1,24 @@
 Title: Usage Guide
 
-<queue> = Qemistry.Queue( <balance as a string, table of strings, a function, a table of functions, or boolean value>, [<option as a single string, or a table of options>] )
+<queue> = Qemistry.Queue( <name of queue>, <balance as a string, table of strings, a function, a table of functions, or boolean value>, [<option as a single string, or a table of options>] )
 
 	This will instantiate a new Queue.
 	If passed a string value, that string must point to a boolean variable acting as "balance."
-		Example: = QeM.Queue:new( "my_system.balance_variables.balance" ) or 
-					= QeM.Queue:new( "balance_variable" )
+		Example: 	= Qemistry.Queue( "my_queue", "my_system.balance_variables.balance" ) or 
+					= Qemistry.Queue( "my_queue", "balance_variable" )
 	If passed a table value, that table must contain a list of strings, functions, or some combination thereof.
 	In Lua, any value that is not false or nil will evaluate to true. Keep this in mind when passing a
 	function; also, that function must return a value.
-		Example: = QeM.Queue:new( {"balance", "equilibrium"} ) or
-					= Qemistry.Queue( {"my_system.balance", "my_system.equilibrium"} )
-					= Qemistry.Queue( function () return my_system.balance end )
-					= Qemistry.Queue( {"my_system.balance", function () return my_system.equilibrium end} )
-					= Qemistry.Queue( somePredefinedFunction() )
+		Example: 	= Qemistry.Queue( "my_queue", {"balance", "equilibrium"} ) or
+					= Qemistry.Queue( "my_queue", {"my_system.balance", "my_system.equilibrium"} )
+					= Qemistry.Queue( "my_queue", function () return my_system.balance end )
+					= Qemistry.Queue( "my_queue", {"my_system.balance", function () return my_system.equilibrium end} )
+					= Qemistry.Queue( "my_queue", somePredefinedFunction() )
 	If passed a boolean, it must be true, or the Queue won't work.
-		Example: 		= Qemistry.Queue( true )
+		Example: 	= Qemistry.Queue( "my_queue", true )
 	Options are passed the following ways, and are optional:
-		Example: 		= Qemistry.Queue( "balance", "strict_order" )
-					= Qemistry.Queue( "balance", {"strict_order", "single_step"} )
+		Example: 	= Qemistry.Queue( "my_queue", "balance", "strict_order" )
+					= Qemistry.Queue( "my_queue", "balance", {"strict_order", "single_step"} )
 
 	Currently supported options are:
 		strict_order: Maintains the order of actions in the Queue, regardless of consumed or required
@@ -43,11 +43,11 @@ Qemistry.Delete( queue as a string )
 	the same balance as the Queue itself. This string or function must contain the action to be taken.
 	If the value is a string, that value will be sent to the MuD as a command using the Mudlet function
 	send(). If the value is a function, it will be executed when the Queue calls for it.
-		Example: 		Add( function () echo( "Do stuff!" ) end ) or
+		Example: 	Add( function () echo( "Do stuff!" ) end ) or
 					Add( "Do stuff!" )
 	If passed a table, then the table may contain a code field. This code field, or the table itself, must
 	contain a list of strings or functions to be executed.
-		Example: 		Add( {code = {"Do stuff!", "Do more stuff!"}} ) or
+		Example: 	Add( {code = {"Do stuff!", "Do more stuff!"}} ) or
 					Add( {function () echo( "Do stuff!" ) end, function () echo( "Do more stuff!" ) end} ) or
 					Add( {"Do stuff!", function () echo( "Do more stuff!") end} )
 	Optionally, the table can contain either/both a required field and/or a consumed field. If the table
@@ -55,12 +55,12 @@ Qemistry.Delete( queue as a string )
 	string pointing to a boolean variable acting as "balance," or a function that will return a boolean value. 
 	In the case of the required field, this can be a boolean value itself. If these fields are omitted,
 	then it is assumed this action requires the same balance as the Queue itself.
-		Example: add( {code = "code", required = "my_system.balance"} ) or
+		Example: 	Add( {code = "code", required = "my_system.balance"} ) or
 					Add( {code = "code", consumed = "my_system.balance"} ) or
 					Add( {code = "code", required = "my_system.balance", consumed = "my_system.equilibrium"} )
 					Add( {code = "code", required = "my_system.balance", consumed = function () return my_system.equilibrium end} )
 	You can pass both the consumed and required fiels as tables for multiple balances.
-		Example: 		Add( {code = "code", required = {"my_system.balance", "my_system.equilibrium"} )
+		Example: 	Add( {code = "code", required = {"my_system.balance", "my_system.equilibrium"} )
 					Add( {code = "code", required = {function () return my_system.balance end, somePredefinedFunction()}} )
 
 
