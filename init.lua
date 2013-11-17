@@ -6,7 +6,7 @@
 local error = error
 local ipairs = ipairs
 local pairs = pairs
-local Strings = string
+local string = string
 local table = table
 local type = type
 
