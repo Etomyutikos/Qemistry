@@ -148,6 +148,7 @@ local function new (name, conditions, options)
                 error("Qemistry: Conditional passed to Queue constructor may not be a number.", 2)
             end
         end
+
         if options then
             if type( options ) == "table" then
                 for _,opt in ipairs( options ) do
@@ -417,14 +418,8 @@ local function new (name, conditions, options)
                             queue:Do()
                         end
                     end
-                else
-                    error(string.format("Qemistry: Queue (%s) did not execute. Action condition(s) returned false", name), 2)
                 end
-            else
-                error(string.format("Qemistry: Queue (%s) did not execute. Queue condition(s) returned false.", name), 2)
             end
-        else
-            error(string.format("Qemistry: Queue (%s) did not execute. No Actions.", name), 2)
         end
     end
 
