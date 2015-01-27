@@ -179,8 +179,8 @@
         </li>
         <li><span class="parameter">options</span>
             <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
-         A table of strings or a string. Values must be one of
-  the <a href="index.html#valid_options">valid_options</a>.
+         A table of strings or a string. Values must be one
+  of the <a href="index.html#valid_options">valid_options</a>.
         </li>
     </ul>
 
@@ -193,6 +193,20 @@
 
 
 
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">
+  <span class="keyword">local</span> queue = Qemistry.Queue(<span class="string">"my_queue"</span>, <span class="string">"my_system.balance_variables.balance"</span>)
+  <span class="keyword">local</span> queue = Qemistry.Queue(<span class="string">"my_queue"</span>, <span class="string">"balance_variable"</span>)
+  <span class="keyword">local</span> queue = Qemistry.Queue(<span class="string">"my_queue"</span>, {<span class="string">"balance"</span>, <span class="string">"equilibrium"</span>})
+  <span class="keyword">local</span> queue = Qemistry.Queue(<span class="string">"my_queue"</span>, {<span class="string">"my_system.balance"</span>, <span class="string">"my_system.equilibrium"</span>})
+  <span class="keyword">local</span> queue = Qemistry.Queue(<span class="string">"my_queue"</span>, <span class="keyword">function</span> () <span class="keyword">return</span> my_system.balance <span class="keyword">end</span>)
+  <span class="keyword">local</span> queue = Qemistry.Queue(<span class="string">"my_queue"</span>, {<span class="string">"my_system.balance"</span>, <span class="keyword">function</span> () <span class="keyword">return</span> my_system.equilibrium <span class="keyword">end</span>})
+  <span class="keyword">local</span> queue = Qemistry.Queue(<span class="string">"my_queue"</span>, somePredefinedFunction())
+  <span class="keyword">local</span> queue = Qemistry.Queue(<span class="string">"my_queue"</span>, <span class="keyword">true</span>)
+  <span class="keyword">local</span> queue = Qemistry.Queue(<span class="string">"my_queue"</span>, <span class="string">"balance"</span>, <span class="string">"strict_order"</span>)
+  <span class="keyword">local</span> queue = Qemistry.Queue(<span class="string">"my_queue"</span>, <span class="string">"balance"</span>, {<span class="string">"strict_order"</span>, <span class="string">"single_step"</span>})</pre>
+    </ul>
 
 </dd>
     <dt>
@@ -222,6 +236,21 @@
 
 
 
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example">
+  queue:Add(<span class="keyword">function</span> () echo( <span class="string">"Do stuff!"</span>) <span class="keyword">end</span>)
+  queue:Add(<span class="string">"Do stuff!"</span>)
+  queue:Add({code = {<span class="string">"Do stuff!"</span>, <span class="string">"Do more stuff!"</span>}})
+  queue:Add({<span class="keyword">function</span> () echo( <span class="string">"Do stuff!"</span>) <span class="keyword">end</span>, <span class="keyword">function</span> () echo( <span class="string">"Do more stuff!"</span>) <span class="keyword">end</span>})
+  queue:Add({<span class="string">"Do stuff!"</span>, <span class="keyword">function</span> () echo( <span class="string">"Do more stuff!"</span>) <span class="keyword">end</span>})
+  queue:Add({code = <span class="string">"code"</span>, required = <span class="string">"my_system.balance"</span>})
+  queue:Add({code = <span class="string">"code"</span>, consumed = <span class="string">"my_system.balance"</span>})
+  queue:Add({code = <span class="string">"code"</span>, required = <span class="string">"my_system.balance"</span>, consumed = <span class="string">"my_system.equilibrium"</span>})
+  queue:Add({code = <span class="string">"code"</span>, required = <span class="string">"my_system.balance"</span>, consumed = <span class="keyword">function</span> () <span class="keyword">return</span> my_system.equilibrium <span class="keyword">end</span>})
+  queue:Add({code = <span class="string">"code"</span>, required = {<span class="string">"my_system.balance"</span>, <span class="string">"my_system.equilibrium"</span>})
+  queue:Add({code = <span class="string">"code"</span>, required = {<span class="keyword">function</span> () <span class="keyword">return</span> my_system.balance <span class="keyword">end</span>, somePredefinedFunction()}})</pre>
+    </ul>
 
 </dd>
     <dt>
