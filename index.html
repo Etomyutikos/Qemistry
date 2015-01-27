@@ -27,14 +27,343 @@
 <h1>Qemistry</h1>
 
 
+<h2>Contents</h2>
+<ul>
+<li><a href="#Functions">Functions</a></li>
+<li><a href="#Tables">Tables</a></li>
+<li><a href="#Properties">Properties </a></li>
+</ul>
 
 
+<h2>Modules</h2>
+<ul class="$(kind=='Topics' and '' or 'nowrap'">
+  <li><strong>Qemistry</strong></li>
+</ul>
 
 </div>
 
 <div id="content">
 
+<h1>Module <code>Qemistry</code></h1>
+<p>Qemistry, Queue Manager for Mudlet</p>
+<p></p>
 
+
+<h2><a href="#Functions">Functions</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Do">Do (queue)</a></td>
+	<td class="summary">Executes a single queue or all queues
+ When called with an argument, it calls that Queue's Do function.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Delete">Delete (queue)</a></td>
+	<td class="summary">Removes a Queue from the master list.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#Queue">Queue (name, conditions[, options])</a></td>
+	<td class="summary">Queue constructor.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#queue:Add">queue:Add (action)</a></td>
+	<td class="summary">Adds an Action to the Queue.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#queue:Reset">queue:Reset ()</a></td>
+	<td class="summary">Empties the Queue's Action list.</td>
+	</tr>
+</table>
+<h2><a href="#Tables">Tables</a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#Qemistry">Qemistry</a></td>
+	<td class="summary">Primary Qemistry interface.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#valid_options">valid_options</a></td>
+	<td class="summary">A list of valid Queue options.</td>
+	</tr>
+</table>
+<h2><a href="#Properties">Properties </a></h2>
+<table class="function_list">
+	<tr>
+	<td class="name" nowrap><a href="#self.Name.get">self.Name.get ()</a></td>
+	<td class="summary">Returns the name of the Queue.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.Conditions.get">self.Conditions.get ()</a></td>
+	<td class="summary">Returns the Queue's conditions.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.Options.get">self.Options.get ()</a></td>
+	<td class="summary">Returns a table containing the Queue's options.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#self.Actions.get">self.Actions.get ()</a></td>
+	<td class="summary">Returns a copy of the Queue's actions table.</td>
+	</tr>
+</table>
+
+<br/>
+<br/>
+
+
+    <h2><a name="Functions"></a>Functions</h2>
+    <dl class="function">
+    <dt>
+    <a name = "Do"></a>
+    <strong>Do (queue)</strong>
+    </dt>
+    <dd>
+    Executes a single queue or all queues
+ When called with an argument, it calls that Queue's Do function.
+<p> When called without an argument, it calls all Queues' Do functions.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">queue</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The name of the Queue to be executed.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Delete"></a>
+    <strong>Delete (queue)</strong>
+    </dt>
+    <dd>
+    Removes a Queue from the master list.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">queue</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The name of the Queue to be deleted.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "Queue"></a>
+    <strong>Queue (name, conditions[, options])</strong>
+    </dt>
+    <dd>
+    Queue constructor.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">name</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+         The name of the new Queue.
+        </li>
+        <li><span class="parameter">conditions</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.5">table</a>, <a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a>, <span class="type">bool</span> or <span class="type">function</span></span>
+         The conditions upon which this
+  Queue operates (ex. Balance, Equilibrium).
+  This may be a table of strings or functions.
+  This may be a string, a function, or true.
+  Functions must ultimately return a boolean value.
+  Strings must be the "address" of a boolean value ("my_system.balance").
+        </li>
+        <li><span class="parameter">options</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         A table of strings or a string. Values must be one of
+  the <a href="index.html#valid_options">valid_options</a>.
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="index.html#Queue">Queue</a></span>
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "queue:Add"></a>
+    <strong>queue:Add (action)</strong>
+    </dt>
+    <dd>
+    Adds an Action to the Queue.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">action</span>
+            <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a>, <span class="type">function</span> or <a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+         If it is a string, it assumes the
+  Queue's Conditions. That string will be passed to the MuD via send().
+<p>  If it is a function, it assumes the Queue's Conditions. That function will
+  be called directly.
+<p>  If it is a table, that must be a list of strings or functions, or a
+  formatted Action table. The strings and functions behave as above. The
+  formatted table must contain the field "code", and optionally one or both
+  of "required" and "consumed". "required" and "consumed" function as do
+  Queue Conditions. The "code" functions as a non-formatted action above.
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "queue:Reset"></a>
+    <strong>queue:Reset ()</strong>
+    </dt>
+    <dd>
+    Empties the Queue's Action list.
+
+
+
+
+
+
+
+</dd>
+</dl>
+    <h2><a name="Tables"></a>Tables</h2>
+    <dl class="function">
+    <dt>
+    <a name = "Qemistry"></a>
+    <strong>Qemistry</strong>
+    </dt>
+    <dd>
+    Primary Qemistry interface.
+
+
+
+
+
+
+
+</dd>
+    <dt>
+    <a name = "valid_options"></a>
+    <strong>valid_options</strong>
+    </dt>
+    <dd>
+    A list of valid Queue options.
+
+
+    <h3>Fields:</h3>
+    <ul>
+        <li><span class="parameter">strict_order</span>
+
+        </li>
+        <li><span class="parameter">single_step</span>
+
+        </li>
+    </ul>
+
+
+
+
+
+</dd>
+</dl>
+    <h2><a name="Properties"></a>Properties </h2>
+
+    <dl class="function">
+    <dt>
+    <a name = "self.Name.get"></a>
+    <strong>self.Name.get ()</strong>
+    </dt>
+    <dd>
+    Returns the name of the Queue.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.Conditions.get"></a>
+    <strong>self.Conditions.get ()</strong>
+    </dt>
+    <dd>
+    Returns the Queue's conditions.  This is either a string, a function, a
+ boolean, or a table of strings or functions.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.Options.get"></a>
+    <strong>self.Options.get ()</strong>
+    </dt>
+    <dd>
+    Returns a table containing the Queue's options.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+
+    </ol>
+
+
+
+
+</dd>
+    <dt>
+    <a name = "self.Actions.get"></a>
+    <strong>self.Actions.get ()</strong>
+    </dt>
+    <dd>
+    Returns a copy of the Queue's actions table.
+
+
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="http://www.lua.org/manual/5.1/manual.html#5.5">table</a></span>
+
+    </ol>
+
+
+
+
+</dd>
+</dl>
 
 
 </div> <!-- id="content" -->
