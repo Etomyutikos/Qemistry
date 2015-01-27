@@ -86,9 +86,20 @@ end
 --  This may be a string, a function, or true.
 --  Functions must ultimately return a boolean value.
 --  Strings must be the "address" of a boolean value ("my_system.balance").
--- @tparam[opt] table options A table of strings or a string. Values must be one of
---  the @{valid_options}.
+-- @tparam[opt] table options A table of strings or a string. Values must be one
+--  of the @{valid_options}.
 -- @treturn Queue
+-- @usage
+--  local queue = Qemistry.Queue("my_queue", "my_system.balance_variables.balance")
+--  local queue = Qemistry.Queue("my_queue", "balance_variable")
+--  local queue = Qemistry.Queue("my_queue", {"balance", "equilibrium"})
+--  local queue = Qemistry.Queue("my_queue", {"my_system.balance", "my_system.equilibrium"})
+--  local queue = Qemistry.Queue("my_queue", function () return my_system.balance end)
+--  local queue = Qemistry.Queue("my_queue", {"my_system.balance", function () return my_system.equilibrium end})
+--  local queue = Qemistry.Queue("my_queue", somePredefinedFunction())
+--  local queue = Qemistry.Queue("my_queue", true)
+--  local queue = Qemistry.Queue("my_queue", "balance", "strict_order")
+--  local queue = Qemistry.Queue("my_queue", "balance", {"strict_order", "single_step"})
 local function new (name, conditions, options)
   -- A scoped block of sanity checks.
   -- Makes sure all values passed are valid.
@@ -374,6 +385,18 @@ local function new (name, conditions, options)
   --  formatted table must contain the field "code", and optionally one or both
   --  of "required" and "consumed". "required" and "consumed" function as do
   --  Queue Conditions. The "code" functions as a non-formatted action above.
+  -- @usage
+  --  queue:Add(function () echo( "Do stuff!") end)
+  --  queue:Add("Do stuff!")
+  --  queue:Add({code = {"Do stuff!", "Do more stuff!"}})
+  --  queue:Add({function () echo( "Do stuff!") end, function () echo( "Do more stuff!") end})
+  --  queue:Add({"Do stuff!", function () echo( "Do more stuff!") end})
+  --  queue:Add({code = "code", required = "my_system.balance"})
+  --  queue:Add({code = "code", consumed = "my_system.balance"})
+  --  queue:Add({code = "code", required = "my_system.balance", consumed = "my_system.equilibrium"})
+  --  queue:Add({code = "code", required = "my_system.balance", consumed = function () return my_system.equilibrium end})
+  --  queue:Add({code = "code", required = {"my_system.balance", "my_system.equilibrium"})
+  --  queue:Add({code = "code", required = {function () return my_system.balance end, somePredefinedFunction()}})
   function queue:Add (action)
     if not action then
       error("Qemistry: Cannot add an empty Action to the Queue.", 2)
